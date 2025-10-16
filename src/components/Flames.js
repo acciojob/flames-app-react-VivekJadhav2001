@@ -24,14 +24,15 @@ function Flames() {
     let name1 = firstName.toLowerCase().split('');
     let name2 = secondName.toLowerCase().split('');
 
-    // remove common letters
-    name1.forEach((char) => {
-      const index = name2.indexOf(char);
+    // ✅ correct removal logic
+    for (let i = 0; i < name1.length; i++) {
+      const index = name2.indexOf(name1[i]);
       if (index !== -1) {
+        name1.splice(i, 1);
         name2.splice(index, 1);
-        name1.splice(name1.indexOf(char), 1);
+        i--;
       }
-    });
+    }
 
     const totalLength = name1.length + name2.length;
     const relationShipCode = totalLength % 6;
@@ -44,7 +45,6 @@ function Flames() {
       <input
         type="text"
         placeholder="First Name"
-        className="border-2 border-black mr-2"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
         data-testid="input1"
@@ -53,14 +53,12 @@ function Flames() {
       <input
         type="text"
         placeholder="Second Name"
-        className="border-2 border-black mr-2"
         value={secondName}
         onChange={(e) => setSecondName(e.target.value)}
         data-testid="input2"
         name="name2"
       />
       <button
-        className="text-cyan-300 mr-3.5 bg-gray-400 cursor-pointer hover:bg-gray-800"
         onClick={RelationShip}
         data-testid="calculate_relationship"
         name="calculate_relationship"
@@ -68,7 +66,6 @@ function Flames() {
         Calculate RelationShip Future
       </button>
       <button
-        className="text-cyan-300 p-2 bg-gray-400 cursor-pointer hover:bg-gray-800"
         onClick={() => {
           setFirstName('');
           setSecondName('');
