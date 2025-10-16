@@ -21,22 +21,21 @@ function Flames() {
       return;
     }
 
-    let name1 = firstName.toLowerCase().split('');
-    let name2 = secondName.toLowerCase().split('');
+    // Convert to lowercase and remove spaces
+    let name1 = firstName.toLowerCase().replace(/\s+/g, '').split('');
+    let name2 = secondName.toLowerCase().replace(/\s+/g, '').split('');
 
-    // ✅ Correct stable removal logic
+    // Remove common letters
     for (let i = 0; i < name1.length; i++) {
       const index = name2.indexOf(name1[i]);
       if (index !== -1) {
-        name1[i] = '';
-        name2[index] = '';
+        name1.splice(i, 1);
+        name2.splice(index, 1);
+        i--;
       }
     }
 
-    const remaining1 = name1.filter(ch => ch !== '').length;
-    const remaining2 = name2.filter(ch => ch !== '').length;
-    const totalLength = remaining1 + remaining2;
-
+    const totalLength = name1.length + name2.length;
     const relationShipCode = totalLength % 6;
     const status = RelationShipStatus[relationShipCode];
     setRelationType(status);
