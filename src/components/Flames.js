@@ -24,17 +24,19 @@ function Flames() {
     let name1 = firstName.toLowerCase().split('');
     let name2 = secondName.toLowerCase().split('');
 
-    // ✅ correct removal logic
+    // ✅ Correct stable removal logic
     for (let i = 0; i < name1.length; i++) {
       const index = name2.indexOf(name1[i]);
       if (index !== -1) {
-        name1.splice(i, 1);
-        name2.splice(index, 1);
-        i--;
+        name1[i] = '';
+        name2[index] = '';
       }
     }
 
-    const totalLength = name1.length + name2.length;
+    const remaining1 = name1.filter(ch => ch !== '').length;
+    const remaining2 = name2.filter(ch => ch !== '').length;
+    const totalLength = remaining1 + remaining2;
+
     const relationShipCode = totalLength % 6;
     const status = RelationShipStatus[relationShipCode];
     setRelationType(status);
